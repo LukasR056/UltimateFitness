@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 @Entity
@@ -20,26 +22,26 @@ public class UserModel implements java.io.Serializable {
 	@Column(name = "id")
 	public int id;
 	
-	@Column()
+	@Column(nullable = false, length = 40)
 	private String firstName;
-	@Column()
+	@Column(nullable = false, length = 40)
 	private String lastName;
-	@Column(unique = true)
+	@Column(unique = true, nullable = false, length = 15)
 	public String userName;
-	@Column()
+	@Temporal(TemporalType.DATE)
 	public Date birthDate;
-	@Column()
-	private boolean gender;
-	@Column()
-	private float height;
-	@Column()
-	private float weight;
+	@Column(nullable = false, length = 1)
+	private String gender;
+	@Column(nullable = false)
+	private double height;
+	@Column(nullable = false)
+	private double weight;
 	@Column()
 	private int coach;
 	@Column(unique = true)
 	private String eMail;
-	@Column()
-	private float bmi;
+	@Column(nullable = false)
+	private double bmi;
 	@Column()
 	private boolean isAdmin;
 	@Column()
@@ -59,10 +61,11 @@ public class UserModel implements java.io.Serializable {
 	}
 	
 	
-	public UserModel(int id, String firstName, String lastName, String userName, Date birthDate, boolean gender,
-			float height, float weight, int coach, String eMail, float bmi, boolean isAdmin, boolean enabled) {
+	public UserModel(String firstName, String lastName, 
+			String userName, Date birthDate, String gender,
+			double height, double weight, int coach, String eMail, 
+			double bmi, boolean isAdmin, boolean enabled) {
 		super();
-		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
@@ -117,27 +120,27 @@ public class UserModel implements java.io.Serializable {
 		this.birthDate = birthDate;
 	}
 
-	public boolean isGender() {
+	public String isGender() {
 		return gender;
 	}
 
-	public void setGender(boolean gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
-	public float getHeight() {
+	public double getHeight() {
 		return height;
 	}
 
-	public void setHeight(float height) {
+	public void setHeight(double height) {
 		this.height = height;
 	}
 
-	public float getWeight() {
+	public double getWeight() {
 		return weight;
 	}
 
-	public void setWeight(float weight) {
+	public void setWeight(double weight) {
 		this.weight = weight;
 	}
 
@@ -157,11 +160,11 @@ public class UserModel implements java.io.Serializable {
 		this.eMail = eMail;
 	}
 
-	public float getBmi() {
+	public double getBmi() {
 		return bmi;
 	}
 
-	public void setBmi(float bmi) {
+	public void setBmi(double bmi) {
 		this.bmi = bmi;
 	}
 
