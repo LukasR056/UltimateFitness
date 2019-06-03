@@ -20,6 +20,7 @@
 	<!-- JSR-303/JSR-349 (= databinding and validation) support will be detected on classpath and enabled automatically -->
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler/>
+	<!-- test für github -->
  
 	<!-- SpringResourceTemplateResolver automatically integrates with Spring's own -->
 	<!-- resource resolution infrastructure, which is highly recommended. -->
