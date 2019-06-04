@@ -2,6 +2,7 @@ package at.fh.swenga.controller;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.fluttercode.datafactory.impl.DataFactory;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.model.LogModel;
 import at.fh.swenga.model.UserModel;
+import at.fh.swenga.model.UserService;
 import at.fh.swenga.repository.ForumentryRepository;
 import at.fh.swenga.repository.LogRepository;
 import at.fh.swenga.repository.UserRepository;
@@ -29,18 +31,31 @@ public class UserController {
 	/*@Autowired
 	UserRepository userRepository;
 	
-	@Autowired
+ 	@Autowired
 	LogRepository logRepository;
 	
 	@Autowired
 	ForumentryRepository forumentryRepository; */
+	
+	@Autowired
+	private UserService userService;
 
-	@RequestMapping(value = { "/", "list" })
-	public String index(Model model) {
-	/*	List<UserModel> users = userRepository.findAll();
-		model.addAttribute("users", users);
-		model.addAttribute("count", users.size()); */
+	
+	@RequestMapping(value = { "/"})
+	public String showAllUsers(Model model) {
+		
+		
+		
+		Date now = new Date();
+		
+		UserService.addUser(new UserModel("Max","Schwinger","MaxSng",now,"w",12.34,11.34,2,"max@schwinger",11.23,false,true));
+		UserService.addUser(new UserModel("Max","Musterman","MaMu",now,"m",12.34,11.34,2,"max@schwinger",11.23,false,true));
+		UserService.addUser(new UserModel("Max","Musterfrau","MaxSng",now,"w",12.34,11.34,2,"max@schwinger",11.23,false,true));
+		
+		model.addAttribute("users", UserService.getAllUsers() );
+		
 		return "index";
+		
 	}
 	
 	/*@RequestMapping(value = { "/getPage" })
