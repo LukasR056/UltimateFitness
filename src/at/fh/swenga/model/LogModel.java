@@ -1,8 +1,10 @@
 package at.fh.swenga.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,55 +12,82 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class LogModel {
+public class LogModel implements Serializable {
 
 	@Id
+	@Column(name = "logId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	
-	@ManyToOne (cascade = CascadeType.PERSIST)
-	private UserModel userId;
-	
-	private float height;
-	
-	private float weight;
-	
-	private float bmi;
-	
+	private int logId;
+
+	@Column(nullable = false)
+	private double height;
+
+	@Column(nullable = false)
+	private double weight;
+
+	@Column
+	private int points = 0;
+
+	@Column
 	private Date date;
-	
-	
+
+	@ManyToOne // (cascade = CascadeType.ALL)
+	UserModel user;
+
 	public LogModel() {
-		// TODO Auto-generated constructor stub
+
 	}
 
-	public LogModel(int id, UserModel userId, float height, float weight, float bmi, Date date) {
+	public void setHeight(double height) {
+		this.height = height;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
+	public LogModel(double height, double weight, int points, Date date) {
 		super();
-		this.id = id;
-		this.userId = userId;
 		this.height = height;
 		this.weight = weight;
-		this.bmi = bmi;
+		this.points = points;
 		this.date = date;
 	}
 
-	public int getId() {
-		return id;
+	public LogModel(UserModel user, double height, double weight, int points, Date date) {
+		super();
+		this.user = user;
+		this.height = height;
+		this.weight = weight;
+		this.points = points;
+		this.date = date;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public int getPoints() {
+		return points;
 	}
 
-	public UserModel getUserId() {
-		return userId;
+	public void setPoints(int points) {
+		this.points = points;
 	}
 
-	public void setUserId(UserModel userId) {
-		this.userId = userId;
+	public int getLogId() {
+		return logId;
 	}
 
-	public float getHeight() {
+	public void setLogId(int logId) {
+		this.logId = logId;
+	}
+
+	public UserModel getUser() {
+		return user;
+	}
+
+	public void setUser(UserModel user) {
+		this.user = user;
+	}
+
+	public double getHeight() {
 		return height;
 	}
 
@@ -66,20 +95,12 @@ public class LogModel {
 		this.height = height;
 	}
 
-	public float getWeight() {
+	public double getWeight() {
 		return weight;
 	}
 
 	public void setWeight(float weight) {
 		this.weight = weight;
-	}
-
-	public float getBmi() {
-		return bmi;
-	}
-
-	public void setBmi(float bmi) {
-		this.bmi = bmi;
 	}
 
 	public Date getDate() {
@@ -94,7 +115,7 @@ public class LogModel {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + logId;
 		return result;
 	}
 
@@ -107,11 +128,16 @@ public class LogModel {
 		if (getClass() != obj.getClass())
 			return false;
 		LogModel other = (LogModel) obj;
-		if (id != other.id)
+		if (logId != other.logId)
 			return false;
 		return true;
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "LogModel [user=" + user + ", height=" + height + ", weight=" + weight + ", points=" + points + ", date="
+				+ date + "]";
+	}
+
+
 }
